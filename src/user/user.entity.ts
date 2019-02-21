@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, BeforeInsert } from 'typeorm';
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	Column,
+	BeforeInsert,
+} from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { UserRO } from './user.dto';
@@ -13,7 +19,7 @@ export class UserEntity {
 
 	@Column({
 		type: 'text',
-		unique: true
+		unique: true,
 	})
 	username: string;
 
@@ -26,8 +32,8 @@ export class UserEntity {
 	}
 
 	toResponseObject(showToken: boolean = true): UserRO {
-		const {id, created, username, token} = this;
-		const responseObject: any = {id, created, username};
+		const { id, created, username, token } = this;
+		const responseObject: any = { id, created, username };
 		if (showToken) {
 			responseObject.token = token;
 		}
@@ -39,7 +45,7 @@ export class UserEntity {
 	}
 
 	private get token() {
-		const {id, username} = this;
-		return jwt.sign({id, username}, process.env.SECRET, { expiresIn: '7d'});
+		const { id, username } = this;
+		return jwt.sign({ id, username }, process.env.SECRET, { expiresIn: '7d' });
 	}
 }

@@ -7,7 +7,8 @@ import { UserDTO, UserRO } from './user.dto';
 @Injectable()
 export class UserService {
 	constructor(
-		@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>
+		@InjectRepository(UserEntity)
+		private userRepository: Repository<UserEntity>,
 	) {}
 
 	async showAll(): Promise<UserRO[]> {
@@ -17,16 +18,19 @@ export class UserService {
 
 	async login(data: UserDTO): Promise<any> {
 		const { username, password } = data;
-		const user = await this.userRepository.findOne({ where: {username}});
-		if (!user || !(await (user.comparePassword(password)))) {
-			throw new HttpException('Invalid username/password', HttpStatus.BAD_REQUEST);
+		const user = await this.userRepository.findOne({ where: { username } });
+		if (!user || !(await user.comparePassword(password))) {
+			throw new HttpException(
+				'Invalid username/password',
+				HttpStatus.BAD_REQUEST,
+			);
 		}
-		return user;
+		return user.toResponseObject();
 	}
 
 	async register(data: UserDTO): Promise<UserRO> {
 		const { username } = data;
-		let user = await this.userRepository.findOne({ where: {username}});
+		let user = await this.userRepository.findOne({ where: { username } });
 		if (user) {
 			throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
 		}

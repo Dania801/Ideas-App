@@ -11,12 +11,16 @@ import { UserModule } from './user/user.module';
 @Module({
 	imports: [TypeOrmModule.forRoot(), IdeaModule, UserModule],
 	controllers: [AppController],
-	providers: [AppService, {
-		provide: APP_FILTER,
-		useClass: HttpErrorFilter
-	}, {
-		provide: APP_INTERCEPTOR,
-		useClass: LoggingInterceptor
-	}],
+	providers: [
+		AppService,
+		{
+			provide: APP_FILTER,
+			useClass: HttpErrorFilter,
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: LoggingInterceptor,
+		},
+	],
 })
 export class AppModule {}
