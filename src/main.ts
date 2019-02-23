@@ -1,6 +1,7 @@
+//The starting point of the app
 import 'dotenv/config';
 
-import { NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core'; // to create nest application
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
 
