@@ -9,6 +9,7 @@ import {
 	UsePipes,
 	Logger,
 	UseGuards,
+	Query,
 } from '@nestjs/common';
 import { IdeaService } from './idea.service';
 import { IdeaDTO } from './idea.dto';
@@ -28,15 +29,15 @@ export class IdeaController {
 	}
 
 	@Get()
-	showAllIdeas() {
-		return this.ideaService.showAll();
+	showAllIdeas(@Query('page') page: number) {
+		return this.ideaService.showAll(page);
 	}
 
 	@Post()
 	@UseGuards(new AuthGuard())
 	@UsePipes(new ValidationPipe())
 	createIdea(@User('id') user, @Body() data: IdeaDTO) {
-		this.logData({user, data});
+		this.logData({ user, data });
 		return this.ideaService.create(user, data);
 	}
 
@@ -48,8 +49,12 @@ export class IdeaController {
 	@Put(':id')
 	@UseGuards(new AuthGuard())
 	@UsePipes(new ValidationPipe())
-	updateIdea(@Param('id') id: string, @User('id') user: string ,@Body() data: Partial<IdeaDTO>) {
-		this.logData({id, data, user});
+	updateIdea(
+		@Param('id') id: string,
+		@User('id') user: string,
+		@Body() data: Partial<IdeaDTO>,
+	) {
+		this.logData({ id, data, user });
 		return this.ideaService.update(id, user, data);
 	}
 
@@ -62,7 +67,7 @@ export class IdeaController {
 
 	@Post(':id/upvote')
 	@UseGuards(new AuthGuard())
-	upvoteIdea(@Param('id') id: string, @User('id') user){
+	upvoteIdea(@Param('id') id: string, @User('id') user) {
 		this.logData({ id, user });
 		return this.ideaService.upvote(id, user);
 	}
@@ -83,7 +88,7 @@ export class IdeaController {
 
 	@Delete(':id/bookmark')
 	@UseGuards(new AuthGuard())
-	unbookmarkIdea(@Param('id') id: string, @User('id') user){
+	unbookmarkIdea(@Param('id') id: string, @User('id') user) {
 		this.logData({ id, user });
 		return this.ideaService.unbookmark(id, user);
 	}

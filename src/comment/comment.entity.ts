@@ -1,6 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, ManyToOne, JoinTable } from "typeorm";
-import { UserEntity } from "src/user/user.entity";
-import { IdeaEntity } from "src/idea/idea.entity";
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	Column,
+	ManyToOne,
+	JoinTable,
+} from 'typeorm';
+import { UserEntity } from 'src/user/user.entity';
+import { IdeaEntity } from 'src/idea/idea.entity';
 
 @Entity('comment')
 export class CommentEntity {
@@ -15,7 +22,7 @@ export class CommentEntity {
 
 	@ManyToOne(type => UserEntity)
 	@JoinTable()
-	author: UserEntity; 
+	author: UserEntity;
 
 	@ManyToOne(type => IdeaEntity, idea => idea.comments)
 	idea: IdeaEntity;

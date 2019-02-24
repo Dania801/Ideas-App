@@ -37,7 +37,7 @@ export class UserEntity {
 	@OneToMany(type => IdeaEntity, idea => idea.author)
 	ideas: IdeaEntity[];
 
-	@ManyToMany(type => IdeaEntity, {cascade: true})
+	@ManyToMany(type => IdeaEntity, { cascade: true })
 	@JoinTable()
 	bookmarks: IdeaEntity[];
 

@@ -1,10 +1,6 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
 
 export class CommentDTO {
 	@IsString()
 	comment: string;
-}
-
-export class CommentRO {
-	
 }

@@ -20,7 +20,7 @@ export class IdeaEntity {
 	@CreateDateColumn() created: Date;
 	@UpdateDateColumn() updated: Date;
 
-	@ManyToOne(type => UserEntity, author => author.ideas) 
+	@ManyToOne(type => UserEntity, author => author.ideas)
 	author: UserEntity;
 
 	@ManyToMany(type => UserEntity, { cascade: true })
@@ -31,6 +31,6 @@ export class IdeaEntity {
 	@JoinTable()
 	downvotes: UserEntity[];
 
-	@OneToMany(type => CommentEntity, comment => comment.idea, {cascade: true})
+	@OneToMany(type => CommentEntity, comment => comment.idea, { cascade: true })
 	comments: CommentEntity[];
 }
